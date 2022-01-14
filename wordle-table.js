@@ -7,8 +7,15 @@ let wordSize;
 
 let letters = [];
 
+let gameLetters = {};
+
 function restartGame() {
     word = WORD_LIST[Math.floor(Math.random() * (WORD_LIST.length - 1))];
+
+    gameLetters = {};
+    for (let i = 0; i < word.length; i++){
+        gameLetters[word.charAt(i)] = true;
+    }
 
     attempt = 0;
     attempts = ATTEPMTS;
@@ -20,78 +27,121 @@ function restartGame() {
 
     letters = [];
 
-    redrawBoard();
+    rebuildBoard();
 }
 
-function redrawBoard() {
+function setCell(attempt, letter, type, text) {
+    let cell = document.getElementById("wordle-cell-" + attempt + "-" + letter);
+    if (type === "current") {
+        cell.style.color = "#DDDDDD";
+    } else if (type === "correct") {
+        cell.style.color = "green";
+    } else if (type === "wrong_position") {
+        cell.style.color = "#EEEA62";
+    } else {
+        cell.style.color = "#808080";
+    }
+    if (text) {
+        letters[attempt][letter] = text;
+        cell.innerHTML = text;
+    }
+}
+
+function setAttemptStyle(attempt, style, text) {
+    for (let l = 0; l < wordSize; l++) {
+        setCell(attempt, l, style, text);
+    }
+}
+
+function rebuildBoard() {
     let div = "";
 
     for (let a = 0; a < attempts; a++) {
         letters[a] = [];
         div += "<div>";
         for (let l = 0; l < wordSize; l++) {
-            div += ("<span class='wordle-cell' id='wordle-cell-" + a + "-" + l + "'>" + (letters[a][l] || "_") + "</span>");
+            letters[a][l] = "_";
+            div += ("<span class='wordle-cell' id='wordle-cell-" + a + "-" + l + "' style='color=#641278'>" + letters[a][l] + "</span>");
         }
         div += "</div>";
     }
 
     document.getElementById("wordle-table").innerHTML = div;
+
+    setAttemptStyle(attempt, "current");
+}
+
+function inputSubmit() {
+    if (letter >= wordSize) {
+
+        let myWord = "";
+        letters[attempt].forEach(element => {
+            myWord += element;
+        });
+
+        if (myWord === word) {
+            alert("lol noice");
+            restartGame();
+        } else {
+            if (wordListCheck[myWord]) {
+                for (let l = 0; l < wordSize; l++) {
+                    let style;
+                    let char = myWord.charAt(l);
+                    if (char === word.charAt(l)) {
+                        style = "correct";
+                    } else if (gameLetters[char]) {
+                        style = "wrong_position";
+                    }
+                    setCell(attempt, l, style);
+                }
+            } else {
+                alert("'" + myWord + "' is not in the dictionary");
+                setAttemptStyle(attempt, "current", "_");
+                letter = 0;
+                return;
+            }
+            attempt++;
+            if (attempt < attempts){
+            setAttemptStyle(attempt, "current");
+            }
+            letter = 0;
+            if (attempt >= attempts) {
+                alert("what a retard");
+                restartGame();
+            }
+        }
+    } else {
+        alert("finish the word");
+    }
+}
+
+function inputErase() {
+    letter--;
+    if (letter < 0) {
+        letter = 0;
+    } else {
+        setCell(attempt, letter, "current", "_");
+    }
+}
+
+function inputKey(keyName) {
+    let cell = document.getElementById("wordle-cell-" + attempt + "-" + letter);
+    if (cell && letter < wordSize) {
+        letters[attempt][letter] = keyName;
+        cell.innerHTML = letters[attempt][letter];
+        letter++;
+    }
 }
 
 document.addEventListener('keydown', (event) => {
     const keyName = event.key;
     if (keyboardCheck[keyName]) {
         if (keyName === "Enter") {
-            if (letter >= wordSize) {
-                
-                let myWord = "";
-                for (let i = 0; i < letters[attempt]; i++) {
-                    myWord += letters[attempt][i];
-                }
-
-                if (myWord === word) {
-                    alert("lol noice");
-                    restartGame();
-                } else {
-                    if (wordListCheck[myWord]) {
-                        for (let l = 0; l < letters[attempt]; l++) {
-                            let cell = document.getElementById("wordle-cell-" + attempt + "-" + l);
-                            cell.style.color = "#808080";
-                        }
-                    } else {
-
-                    }
-                    attempt++;
-                    for (let l = 0; l < letters[attempt]; l++) {
-                        let cell = document.getElementById("wordle-cell-" + attempt + "-" + l);
-                        cell.style.color = "#AAAAAA";
-                    }
-                    letter = 0;
-                    if (attempt >= attempts) {
-                        alert("what a retard");
-                        restartGame();
-                    }
-                }
-            } else {
-                alert("finish the word");
-            }
+            inputSubmit();
         } else if (keyName === "Backspace") {
-            letter--;
-            if (letter < 0) {
-                letter = 0;
-            }
-            let cell = document.getElementById("wordle-cell-" + attempt + "-" + letter);
-            if (cell) {
-                letters[attempt][letter] = null;
-                cell.innerHTML = (letters[attempt][letter] || "_");
-            }
+            inputErase();
         } else {
-            let cell = document.getElementById("wordle-cell-" + attempt + "-" + letter);
-            if (cell && letter < wordSize) {
-                letters[attempt][letter] = keyName;
-                cell.innerHTML = (letters[attempt][letter] || "_");
-                letter++;
-            }
+            inputKey(keyName);
         }
     }
 }, false);
