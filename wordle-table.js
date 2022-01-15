@@ -91,12 +91,17 @@ function inputSubmit() {
                     let char = myWord.charAt(l);
                     if (char === word.charAt(l)) {
                         style = "correct";
-                        gameLetters[char]--;
                     } else if (gameLetters[char] > 0) {
                         style = "wrong_position";
                     }
                     setCell(attempt, l, style);
                     setKey(keyboardCheck[char], style);
+                }
+                for (let l = 0; l < wordSize; l++) {
+                    let char = myWord.charAt(l);
+                    if (char === word.charAt(l)) {
+                        gameLetters[char]--;
+                    }
                 }
             } else {
                 alert("'" + myWord + "' is not in the dictionary");

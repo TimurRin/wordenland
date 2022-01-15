@@ -39,6 +39,7 @@ function setKey(keyId, type) {
         } else {
             key.style.color = "#808080";
             key.style.backgroundColor = "#161616";
+            key.style.textDecoration = "line-through";
         }
     }
 
