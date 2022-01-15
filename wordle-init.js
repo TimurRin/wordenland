@@ -17,5 +17,4 @@ WORD_LIST.forEach(element => {
     wordListCheck[element] = true;
 });
 
-redrawKeyboard();
 restartGame();

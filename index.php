@@ -1,6 +1,6 @@
 <?php
-$TITLE = "wordle remixed";
-$VERSION = "0.1";
+$TITLE = "wordle unleashed";
+$VERSION = "0.2";
 ?>
 <html>
 
@@ -8,19 +8,16 @@ $VERSION = "0.1";
     <title><?php
             echo $TITLE;
             ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: monospace;
-            font-size: 32px;
+            font-size: 2vmax;
             font-weight: bold;
             color: #DDDDDD;
             background-color: #161616;
             text-align: center;
 
-        }
-
-        #wordle-table {
-            font-size: 72px;
         }
 
         a:link,
@@ -36,30 +33,65 @@ $VERSION = "0.1";
             text-decoration: none;
         }
 
+        .wordle-game {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .wordle-footer {
+            font-size: 1vmax;
+            padding: 20px;
+            /* display: none; */
+        }
+
+        .wordle-section {
+            flex: 100%;
+        }
+
+        @media only screen and (min-width: 768px) {
+
+            .wordle-section {
+                flex: 50%;
+            }
+        }
+
+        #wordle-table {
+            font-size: 5vmax;
+        }
+
         .wordle-cell {
-            /* background-color: hotpink; */
             padding: 0px 25px 10px;
-            /* margin: 5px; */
-            border-width: 4px;
-            border-color: aquamarine;
             color: #808080;
+        }
+
+        .wordle-keyboard-key {
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 3vmax;
+            border: none;
+            background-color: #AFAFAF;
+            padding: 1.5vmax 1vmax;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 2px;
         }
     </style>
 
 </head>
 
 <body>
-    <div>
-        <p><?php echo $TITLE; ?>, <span id="wordle-mode-name"></span></p>
+    <div class="wordle-header">
+        <p><?php echo $TITLE; ?>, <span id="wordle-mode-name">...</span></p>
     </div>
-    <div>
-        <div id="wordle-table">
+    <div class="wordle-game">
+        <div class="wordle-section" id="wordle-table">
         </div>
-        <div id="wordle-keyboard">
+        <div class="wordle-section" id="wordle-keyboard">
         </div>
     </div>
-    <div>
-        <p>wordle remix <?php echo $VERSION; ?> by <a href="https://moziev.ru/">TimurRin</a> (2022)</br>original <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> by <a href="https://www.powerlanguage.co.uk/">powerlanguage</a></p>
+    <div class="wordle-footer">
+        <p>wordle unleashed <?php echo $VERSION; ?> by <a href="https://moziev.ru/">TimurRin</a> (2022)</br>original <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> by <a href="https://www.powerlanguage.co.uk/">powerlanguage</a></p>
     </div>
 
     <script type="text/javascript" src="wordle-table.js"></script>

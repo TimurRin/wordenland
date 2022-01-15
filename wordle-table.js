@@ -14,7 +14,7 @@ function restartGame() {
 
     gameLetters = {};
     for (let i = 0; i < word.length; i++){
-        gameLetters[word.charAt(i)] = true;
+        gameLetters[word.charAt(i)] = (gameLetters[word.charAt(i)] || 0) + 1;
     }
 
     attempt = 0;
@@ -26,6 +26,8 @@ function restartGame() {
     document.getElementById("wordle-mode-name").title = "Guess " + wordSize + "-letter word in " + attempts + " attempt(s)";
 
     letters = [];
+
+    redrawKeyboard();
 
     rebuildBoard();
 }
@@ -89,10 +91,12 @@ function inputSubmit() {
                     let char = myWord.charAt(l);
                     if (char === word.charAt(l)) {
                         style = "correct";
-                    } else if (gameLetters[char]) {
+                        gameLetters[char]--;
+                    } else if (gameLetters[char] > 0) {
                         style = "wrong_position";
                     }
                     setCell(attempt, l, style);
+                    setKey(keyboardCheck[char], style);
                 }
             } else {
                 alert("'" + myWord + "' is not in the dictionary");
@@ -106,7 +110,7 @@ function inputSubmit() {
             }
             letter = 0;
             if (attempt >= attempts) {
-                alert("what a retard");
+                alert("what a retard, couldn't guess '" + word + "'");
                 restartGame();
             }
         }
