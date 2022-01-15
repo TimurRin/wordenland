@@ -1,6 +1,6 @@
 <?php
 $TITLE = "wordle unleashed";
-$VERSION = "0.2.1";
+$VERSION = "0.2.2";
 ?>
 <html>
 
@@ -75,6 +75,16 @@ $VERSION = "0.2.1";
             text-decoration: none;
             display: inline-block;
             margin: 2px;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.0;
+            }
+        }
+
+        .blink {
+            animation: blink 1s step-start 0s infinite;
         }
     </style>
 

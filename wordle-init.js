@@ -17,4 +17,10 @@ WORD_LIST.forEach(element => {
     wordListCheck[element] = true;
 });
 
+const COLOR_BACKGROUND = "#161616";
+const COLOR_CURRENT = "#DDDDDD";
+const COLOR_CORRECT = "green";
+const COLOR_MISPLACED = "#FFC90E";
+const COLOR_MISSED = "#808080";
+
 restartGame();

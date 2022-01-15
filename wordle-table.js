@@ -13,7 +13,7 @@ function restartGame() {
     word = WORD_LIST[Math.floor(Math.random() * (WORD_LIST.length - 1))];
 
     gameLetters = {};
-    for (let i = 0; i < word.length; i++){
+    for (let i = 0; i < word.length; i++) {
         gameLetters[word.charAt(i)] = (gameLetters[word.charAt(i)] || 0) + 1;
     }
 
@@ -27,21 +27,22 @@ function restartGame() {
 
     letters = [];
 
-    redrawKeyboard();
+    // resetKeyboard();
 
+    redrawKeyboard();
     rebuildBoard();
 }
 
 function setCell(attempt, letter, type, text) {
     let cell = document.getElementById("wordle-cell-" + attempt + "-" + letter);
     if (type === "current") {
-        cell.style.color = "#DDDDDD";
+        cell.style.color = COLOR_CURRENT;
     } else if (type === "correct") {
-        cell.style.color = "green";
-    } else if (type === "wrong_position") {
-        cell.style.color = "#EEEA62";
+        cell.style.color = COLOR_CORRECT;
+    } else if (type === "misplaced") {
+        cell.style.color = COLOR_MISPLACED;
     } else {
-        cell.style.color = "#808080";
+        cell.style.color = COLOR_MISSED;
     }
     if (text) {
         letters[attempt][letter] = text;
@@ -92,7 +93,7 @@ function inputSubmit() {
                     if (char === word.charAt(l)) {
                         style = "correct";
                     } else if (gameLetters[char] > 0) {
-                        style = "wrong_position";
+                        style = "misplaced";
                     }
                     setCell(attempt, l, style);
                     setKey(keyboardCheck[char], style);
@@ -110,8 +111,8 @@ function inputSubmit() {
                 return;
             }
             attempt++;
-            if (attempt < attempts){
-            setAttemptStyle(attempt, "current");
+            if (attempt < attempts) {
+                setAttemptStyle(attempt, "current");
             }
             letter = 0;
             if (attempt >= attempts) {
@@ -143,14 +144,8 @@ function inputKey(keyName) {
 }
 
 document.addEventListener('keydown', (event) => {
-    const keyName = event.key;
+    const keyName = event.key.toLowerCase();
     if (keyboardCheck[keyName]) {
-        if (keyName === "Enter") {
-            inputSubmit();
-        } else if (keyName === "Backspace") {
-            inputErase();
-        } else {
-            inputKey(keyName);
-        }
+        keyPressed(keyName);
     }
 }, false);
