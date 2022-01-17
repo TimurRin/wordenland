@@ -1,6 +1,7 @@
 <?php
 $TITLE = "wordle unleashed";
-$VERSION = "0.2.2";
+$VERSION = "0.2.3";
+$DATE = "2021-01-17";
 ?>
 <html>
 
@@ -101,7 +102,7 @@ $VERSION = "0.2.2";
         </div>
     </div>
     <div class="wordle-footer">
-        <p>wordle unleashed <?php echo $VERSION; ?> by <a href="https://moziev.ru/">TimurRin</a> (2022)</br>original <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> by <a href="https://www.powerlanguage.co.uk/">powerlanguage</a></p>
+        <p>wordle unleashed <span title='<?php echo $DATE; ?>'><?php echo $VERSION; ?></span> by <a href="https://moziev.ru/">TimurRin</a></br>original <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> by <a href="https://www.powerlanguage.co.uk/">powerlanguage</a></p>
     </div>
 
     <script type="text/javascript" src="wordle-table.js"></script>

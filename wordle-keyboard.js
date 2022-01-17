@@ -7,17 +7,9 @@ const keyboardLayout = [
 let keyboardCheck = {};
 let keyboardStatus = {};
 
-
-function resetKeyboard() {
-    if (keyboardCheck) {
-        keyboardCheck.forEach(keyId => {
-            setKey(keyId, "current");
-        });
-    }
-}
-
-function redrawKeyboard() {
+function rebuildKeyboard() {
     keyboardCheck = {};
+    keyboardStatus = {};
     let div = "</br></br>";
     let keys = 0;
     keyboardLayout.forEach(row => {

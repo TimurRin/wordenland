@@ -27,9 +27,7 @@ function restartGame() {
 
     letters = [];
 
-    // resetKeyboard();
-
-    redrawKeyboard();
+    rebuildKeyboard();
     rebuildBoard();
 }
 
