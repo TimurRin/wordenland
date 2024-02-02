@@ -1,0 +1,25 @@
+{
+  "name": "wordenland",
+  "version": "0.2.3",
+  "description": "Lightweight bloat-free word games",
+  "license": "ISC",
+  "author": {
+    "name": "Timur Moziev",
+    "email": "timur.moziev@gmail.com",
+    "url": "https://timurrin.github.io"
+  },
+  "type": "module",
+  "types": "env.d.ts",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "lint": "npx eslint --ext .js,.json .",
+    "lint-fix": "npx eslint --fix --ext .js,.json .",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@cinnabar-forge/eslint-plugin": "^0.2.1",
+    "eslint-plugin-jsdoc": "^48.0.4",
+    "vite": "^5.0.12"
+  }
+}
